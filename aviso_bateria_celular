@@ -1,1 +1,537 @@
-
+[
+    {
+        "id": "2e743afe4dcb31a4",
+        "type": "server-state-changed",
+        "z": "9afeddbb10e24bdb",
+        "name": "Bateria abaixo de 20%",
+        "server": "aead75a2.f43a18",
+        "version": 4,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.a71_battery_level",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "num",
+        "haltifstate": "20",
+        "halt_if_type": "num",
+        "halt_if_compare": "lt",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 180,
+        "y": 940,
+        "wires": [
+            [
+                "1ddf0c765d81aaf8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "51cb4d4ddc9d26fb",
+        "type": "api-call-service",
+        "z": "9afeddbb10e24bdb",
+        "name": "Carregar Celular Rafael",
+        "server": "aead75a2.f43a18",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "alexa_media_echo_sala",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"data\":{\"type\":\"announce\"},\"message\":\"Celular do Rafael com bateria baixa\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "output_location": "",
+        "output_location_type": "none",
+        "x": 730,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ddf0c765d81aaf8",
+        "type": "api-current-state",
+        "z": "9afeddbb10e24bdb",
+        "name": "Rafael em casa",
+        "server": "aead75a2.f43a18",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "home",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "device_tracker.a71",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 420,
+        "y": 940,
+        "wires": [
+            [
+                "3977a0a406a29cc4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3977a0a406a29cc4",
+        "type": "api-current-state",
+        "z": "9afeddbb10e24bdb",
+        "name": "Celular descarregando",
+        "server": "aead75a2.f43a18",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.a71_is_charging_2",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 660,
+        "y": 940,
+        "wires": [
+            [
+                "84ba0bdc03e3106e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e2f8bf5b7e8a1ed6",
+        "type": "throttle",
+        "z": "9afeddbb10e24bdb",
+        "name": "Contador",
+        "throttleType": "time",
+        "timeLimit": "5",
+        "timeLimitType": "minutes",
+        "countLimit": "1",
+        "blockSize": 0,
+        "locked": false,
+        "x": 500,
+        "y": 1020,
+        "wires": [
+            [
+                "51cb4d4ddc9d26fb"
+            ]
+        ]
+    },
+    {
+        "id": "60f701e46b61d363",
+        "type": "comment",
+        "z": "9afeddbb10e24bdb",
+        "name": "--------------------------------------------------- Controle de Baterias dos Celulares --------------------------------------------------- ",
+        "info": "",
+        "x": 560,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "8d26ca735b0c2905",
+        "type": "comment",
+        "z": "9afeddbb10e24bdb",
+        "name": "Celular Rafael",
+        "info": "",
+        "x": 570,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "d4eb804bb2651545",
+        "type": "server-state-changed",
+        "z": "9afeddbb10e24bdb",
+        "name": "Bateria 100%",
+        "server": "aead75a2.f43a18",
+        "version": 4,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.a71_battery_level",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "num",
+        "haltifstate": "100",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 110,
+        "y": 1100,
+        "wires": [
+            [
+                "7ac5cf512cc0a78b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7ac5cf512cc0a78b",
+        "type": "api-current-state",
+        "z": "9afeddbb10e24bdb",
+        "name": "Rafael em casa",
+        "server": "aead75a2.f43a18",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "home",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "device_tracker.a71",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 300,
+        "y": 1100,
+        "wires": [
+            [
+                "aef50a64c89981f0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "aef50a64c89981f0",
+        "type": "api-current-state",
+        "z": "9afeddbb10e24bdb",
+        "name": "Celular carregando",
+        "server": "aead75a2.f43a18",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.a71_is_charging_2",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 510,
+        "y": 1100,
+        "wires": [
+            [
+                "9eb13aeac52ba13f",
+                "0cd4e38c179d52bf"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "eda18471df9a0cb7",
+        "type": "api-call-service",
+        "z": "9afeddbb10e24bdb",
+        "name": "Celular Rafael 100%",
+        "server": "aead75a2.f43a18",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "alexa_media_echo_sala",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"data\":{\"type\":\"announce\"},\"message\":\"Celular do Rafael carregado 100%\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "output_location": "",
+        "output_location_type": "none",
+        "x": 920,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a684854742c8d3d2",
+        "type": "api-current-state",
+        "z": "9afeddbb10e24bdb",
+        "name": "Bateria 100%",
+        "server": "aead75a2.f43a18",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "100",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.a71_battery_level",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 560,
+        "y": 1160,
+        "wires": [
+            [
+                "ff36b6d719ad398a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9eb13aeac52ba13f",
+        "type": "function",
+        "z": "9afeddbb10e24bdb",
+        "name": "Aciona Delay Loop",
+        "func": "//setTimeout= Retorna o valor em milisegundos\n\n//inicialização de variáveis\nlet contador = 0;\nlet minutos, segundos = 0; \n\n// ESCOLHA OS VALORES EM SEGUNDOS OU MINUTOS AQUI\nsegundos = 1; //setar o tempo em segundos\nminutos = 1; //setar o tempo em minutos\n\n//transforma milisegundos\nsegundos = segundos * 1000;\nminutos = minutos * 60000;\n\nfor (let i = 1; i <= 2; i++) { // mude i <= para o valor de repetições\n    setTimeout(soma, minutos * i); //mude para segundos ou minutos\n}\n\nfunction soma(){\n    contador = contador + 1;\n    node.send({payload:contador});\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 1160,
+        "wires": [
+            [
+                "a684854742c8d3d2"
+            ]
+        ]
+    },
+    {
+        "id": "5ddd603cf6f01790",
+        "type": "link in",
+        "z": "9afeddbb10e24bdb",
+        "name": "Controle Bateria Rafael",
+        "links": [
+            "ff36b6d719ad398a"
+        ],
+        "x": 165,
+        "y": 1160,
+        "wires": [
+            [
+                "7ac5cf512cc0a78b"
+            ]
+        ]
+    },
+    {
+        "id": "ff36b6d719ad398a",
+        "type": "link out",
+        "z": "9afeddbb10e24bdb",
+        "name": "Aciona controle bateria Rafael",
+        "mode": "link",
+        "links": [
+            "5ddd603cf6f01790"
+        ],
+        "x": 695,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "0cd4e38c179d52bf",
+        "type": "time-range-switch",
+        "z": "9afeddbb10e24bdb",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "startTime": "06:00",
+        "endTime": "23:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 730,
+        "y": 1100,
+        "wires": [
+            [
+                "eda18471df9a0cb7"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "84ba0bdc03e3106e",
+        "type": "time-range-switch",
+        "z": "9afeddbb10e24bdb",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "startTime": "06:00",
+        "endTime": "23:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 870,
+        "y": 940,
+        "wires": [
+            [
+                "e2f8bf5b7e8a1ed6"
+            ],
+            []
+        ]
+    }
+]
